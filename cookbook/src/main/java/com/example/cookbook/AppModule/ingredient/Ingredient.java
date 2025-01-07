@@ -3,6 +3,7 @@ package com.example.cookbook.AppModule.ingredient;
 import java.util.List;
 
 import com.example.cookbook.AppModule.recipe.Recipe;
+import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredient;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,8 +40,8 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     Type type;
 
-    @ManyToMany(mappedBy = "ingredients", cascade={CascadeType.ALL}) //fetch = FetchType.LAZY ?
-    List<Recipe> recipes;
+    @OneToMany(mappedBy = "ingredient")
+    private List<RecipeIngredient> recipeIngredients;
 
     public void setAndcalculatePricePer1gr(double pricePerPackage, double packageWeight, String weightUnit) {
         if((weightUnit.toLowerCase()).equals("kg")){

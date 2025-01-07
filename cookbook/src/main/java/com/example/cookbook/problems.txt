@@ -1,0 +1,5 @@
+AppModule >> Recipe
+field: quantities
+ingredient list need to have quantities to calculate the price
+already has an ingredient list
+now need a map with the quantities of each
