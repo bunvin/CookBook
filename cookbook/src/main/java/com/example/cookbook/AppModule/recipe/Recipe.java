@@ -2,20 +2,14 @@ package com.example.cookbook.AppModule.recipe;
 
 import java.util.List;
 
-import org.springframework.data.repository.cdi.Eager;
-
-import com.example.cookbook.AppModule.ingredient.Ingredient;
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredient;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,11 +24,20 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    //creator/editor >> UserId
+
     private String title;
-    private String method;
+    private boolean isPrivate; 
+    //if recipe changed by user would save a copy with changes, totle + today date, 
+    //would show privatly only to the user
+
+    @Enumerated(EnumType.STRING)
+    MethodType methodType;
+    
+    private String description;
     private String cookingTime;
+
 
     @OneToMany(mappedBy = "recipe")
     private List<RecipeIngredient> recipeIngredients; 
-
 }

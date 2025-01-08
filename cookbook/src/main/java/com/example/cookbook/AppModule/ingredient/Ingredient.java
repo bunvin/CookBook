@@ -5,7 +5,6 @@ import java.util.List;
 import com.example.cookbook.AppModule.recipe.Recipe;
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredient;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,8 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,14 +39,4 @@ public class Ingredient {
 
     @OneToMany(mappedBy = "ingredient")
     private List<RecipeIngredient> recipeIngredients;
-
-    public void setAndcalculatePricePer1gr(double pricePerPackage, double packageWeight, String weightUnit) {
-        if((weightUnit.toLowerCase()).equals("kg")){
-            this.priceper1gr = pricePerPackage/(1000*packageWeight);
-        }
-        if((weightUnit.toLowerCase()).equals("gr")){
-            this.priceper1gr = pricePerPackage/packageWeight;
-    }
-}
-
 }

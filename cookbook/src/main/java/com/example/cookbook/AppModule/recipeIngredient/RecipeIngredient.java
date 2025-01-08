@@ -28,5 +28,13 @@ public class RecipeIngredient {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    private double ingredientQuantity;
+    private double ingredientAmountInGr;
+
+    public int getIngredientId() {
+        return this.ingredient.getId();
+    }
+
+    public int getRecipeId() {
+        return this.recipe.getId();
+    }
 }
