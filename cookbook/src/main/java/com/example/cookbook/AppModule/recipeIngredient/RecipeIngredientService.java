@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.cookbook.AppModule.recipe.RecipeDTO;
 import com.example.cookbook.ErrorHandeling.AppException;
 
 @Service
@@ -15,7 +16,6 @@ public interface RecipeIngredientService {
     List<RecipeIngredient> getAllRecipeIngredients();
     List<RecipeIngredient> getAllRecipeIngredientByRecipeId(int recipeId) throws AppException;
     double getTotalPriceByRecipeId(int recipeId);
-        //get amount
-        //get ingredient price
-        //calculate recipe price
+    List<RecipeDTO> getAllRecipeWithIngredient(int ingredientId);
+    List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException;
 }

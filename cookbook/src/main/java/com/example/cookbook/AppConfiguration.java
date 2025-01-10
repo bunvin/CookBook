@@ -18,6 +18,4 @@ public class AppConfiguration {
         return new RestTemplate();
     }
 
-
-
 }

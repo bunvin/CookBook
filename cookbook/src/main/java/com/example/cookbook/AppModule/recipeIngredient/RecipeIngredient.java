@@ -10,10 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 public class RecipeIngredient {
 
     @Id
@@ -29,6 +31,7 @@ public class RecipeIngredient {
     private Ingredient ingredient;
 
     private double ingredientAmountInGr;
+    private boolean isOptional;
 
     public int getIngredientId() {
         return this.ingredient.getId();

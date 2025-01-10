@@ -8,13 +8,12 @@ import com.example.cookbook.ErrorHandeling.AppException;
 
 @Service
 public interface IngredientService {
-    Ingredient addIngredient(Ingredient ingredient) throws AppException; //ExistId
+    IngredientDTO addIngredient(IngredientDTO ingredient) throws AppException; //ExistId
     Ingredient getSingleIngredient(int id) throws AppException;//Id Not exist
-    void updateIngredient(int id, Ingredient ingredient) throws AppException; //non exist Id, non exist name
+    void updateIngredient(int id, IngredientDTO ingredient) throws AppException; //non exist Id, non exist name
     void deleteIngredient(int id)throws AppException; //non exist ID
-    List<Ingredient> getAllIngredients();
+    List<IngredientDTO> getAllIngredients();
 
-    void setAndcalculatePricePer1gr(int ingredientId, double pricePerPackage, double packageWeight, String weightUnit) throws AppException;
-
-
+    void setAndCalculatePricePer1gr(int ingredientId, double pricePerPackage, double packageWeight, String weightUnit) throws AppException;
+    IngredientDTO getSingleIngredientDTO(int id) throws AppException;
 }

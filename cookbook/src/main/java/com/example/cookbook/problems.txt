@@ -1,7 +1,0 @@
-
-all beans
-CASCADE relationship with connected table
-
-TODO
-get recipe total price  
-sort recipe by Ingredients 

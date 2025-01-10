@@ -8,13 +8,15 @@ import com.example.cookbook.ErrorHandeling.AppException;
 
 @Service
 public interface RecipeService {
-    Recipe addRecipe(Recipe recipe) throws AppException; //Exist id, exist Title
+    RecipeDTO addRecipe(RecipeDTO recipeDTO) throws AppException; //Exist id, exist Title
     Recipe getSingleRecipe(int id) throws AppException;//non exist id
-    void updateRecipe(int id, Recipe recipe) throws AppException; //non exist id, exist title
+    void updateRecipe(int id, RecipeDTO recipe) throws AppException; //non exist id, exist title
     void deleteRecipe(int id) throws AppException;
     List<Recipe> getAllRecipies();
+    List<RecipeDTO> getAllRecipiesDTO();
 
-    double getRecipeTotalPrice(int recipeId) throws AppException;
+    double getRecipeTotalPrice(int recipeId) throws AppException; //only in recipe ingredient ?
+    RecipeDTO getSingleRecipeDTO(int id) throws AppException;
 
 }
  

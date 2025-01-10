@@ -2,6 +2,7 @@ package com.example.cookbook.AppModule.recipe;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientServiceImp;
@@ -14,16 +15,19 @@ import lombok.RequiredArgsConstructor;
 public class RecipeServiceImp implements RecipeService{
     private final RecipeRepository recipeRepository;
     private final RecipeIngredientServiceImp recipeIngredientServiceImp;
+    private final ModelMapper modelMapper;
 
 	@Override
-	public Recipe addRecipe(Recipe recipe) throws AppException {
-		if(this.recipeRepository.existsById(recipe.getId())){
+	public RecipeDTO addRecipe(RecipeDTO recipeDTO) throws AppException {
+        Recipe recipe = this.modelMapper.map(recipeDTO, Recipe.class);
+		if(this.recipeRepository.existsById(recipeDTO.getId())){
             throw new AppException(RecipeError.RECIPE_ALREADY_EXIST);
         }
-        if(this.recipeRepository.findByTitle(recipe.getTitle()) != null){
+        if(this.recipeRepository.findByTitle(recipeDTO.getTitle()) != null){
             throw new AppException(RecipeError.RECIPE_TITLE_ALREADY_EXIST);
         }	
-        return this.recipeRepository.save(recipe);
+        recipe = this.recipeRepository.save(recipe);
+        return this.modelMapper.map(recipe,RecipeDTO.class);
     }
 
 	@Override
@@ -33,22 +37,31 @@ public class RecipeServiceImp implements RecipeService{
     }
 
 	@Override
-	public void updateRecipe(int id, Recipe recipe) throws AppException {
+	public void updateRecipe(int id, RecipeDTO recipe) throws AppException {
+        Recipe recipeFromDB = this.getSingleRecipe(id);
         if(this.recipeRepository.findByTitle(recipe.getTitle()) != null){
             throw new AppException(RecipeError.RECIPE_TITLE_ALREADY_EXIST);
         }	        
-        Recipe recipeFromDB = this.getSingleRecipe(id);
         recipe.setId(recipeFromDB.getId());
-        this.recipeRepository.save(recipe);
+        Recipe updatedRecipe = this.modelMapper.map(recipe, Recipe.class);
+        this.recipeRepository.save(updatedRecipe);
 	}
 
 	@Override
 	public void deleteRecipe(int id) throws AppException {
-		getSingleRecipe(id); //Exception id not found
+		this.getSingleRecipe(id); //Exception id not found
         this.recipeRepository.deleteById(id);	
     }
 
-	@Override
+    @Override
+	public List<RecipeDTO> getAllRecipiesDTO() {
+        List<Recipe> recipes = this.recipeRepository.findAll();
+        List<RecipeDTO> recipesDTO = recipes.stream().map(recipe -> this.modelMapper.map(recipe, RecipeDTO.class)).toList();
+        return recipesDTO;
+	}
+
+
+    @Override
 	public List<Recipe> getAllRecipies() {
         return this.recipeRepository.findAll();
 	}
@@ -57,6 +70,12 @@ public class RecipeServiceImp implements RecipeService{
     public double getRecipeTotalPrice(int recipeId) throws AppException {
         this.getSingleRecipe(recipeId);
         return this.recipeIngredientServiceImp.getTotalPriceByRecipeId(recipeId);        
+    }
+
+    @Override
+    public RecipeDTO getSingleRecipeDTO(int id) throws AppException {
+        Recipe recipe = this.getSingleRecipe(id);
+        return this.modelMapper.map(recipe, RecipeDTO.class);
     }
 
 

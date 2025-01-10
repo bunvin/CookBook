@@ -1,0 +1,20 @@
+
+all beans add DTO and use model mapper
+
+
+thought:
+version control
+    //When updating a recipe, 
+    //user can choose to over write recipe or add new version/copy so he can go back
+    //name title + today date+ version, 
+    //can pick the prefered version that would be viewed (isPrefered)
+    //all where title like "%Title", are all the versions
+
+CASCADE relationship with connected table
+    //when deleting an ingredient? - nothing, shouldnt happened
+    //when deleting a recipe all recipe ingredient would be deleted- ALL
+    //when deleting a recipe ingredient - nothing
+
+only Admin?
+adding ingredient
+update Ingredient prices

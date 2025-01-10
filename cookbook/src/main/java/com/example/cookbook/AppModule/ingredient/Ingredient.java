@@ -31,12 +31,10 @@ public class Ingredient {
 
     private String name;
     
-    @Column(name = "price_per_1gr")
-    private double priceper1gr = 0.0;
+    @Column(name = "price_per_1gr_NIS")
+    private double priceper1grNIS = 0.0;
 
     @Enumerated(EnumType.STRING)
-    Type type;
+    private Type type;
 
-    @OneToMany(mappedBy = "ingredient")
-    private List<RecipeIngredient> recipeIngredients;
 }
