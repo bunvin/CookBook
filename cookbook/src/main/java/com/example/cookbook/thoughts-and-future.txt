@@ -1,0 +1,18 @@
+
+thought:
+version control
+    //When updating a recipe, 
+    //user can choose to over write recipe or add new version/copy so he can go back
+    //name title + today date+ version, 
+    //can pick the prefered version that would be viewed (isPrefered)
+    //all where title like "%Title", are all the versions 
+        >> need to be with where user_id = id, if want user to be able to copy and edit other users recipies
+
+future
+working login
+- user can't update other user recipe
+- user can copy user recipe
+
+admin can edit all
+- adding ingredient
+- update Ingredient prices

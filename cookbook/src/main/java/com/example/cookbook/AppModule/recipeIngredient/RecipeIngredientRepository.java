@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.cookbook.AppModule.recipe.Recipe;
-import com.example.cookbook.AppModule.recipe.RecipeDTO;
 
 @Repository
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, Integer>{

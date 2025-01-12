@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.cookbook.AppModule.ingredient.Ingredient;
+import com.example.cookbook.AppModule.ingredient.IngredientDTO;
 import com.example.cookbook.AppModule.recipe.RecipeDTO;
 import com.example.cookbook.ErrorHandeling.AppException;
 import com.example.cookbook.AppModule.recipe.Recipe;
@@ -21,23 +22,26 @@ public class RecipeIngredientServiceImp implements RecipeIngredientService{
     private final ModelMapper modelMapper;
 
     @Override
-    public RecipeIngredient addRecipeIngredient(RecipeIngredient recipeIngredient) throws AppException {
-        if(this.recipeIngredientRepository.existsById(recipeIngredient.getId())) {
+    public RecipeIngredientDTO addRecipeIngredient(RecipeIngredientDTO recipeIngredientDTO) throws AppException {
+        if(this.recipeIngredientRepository.existsById(recipeIngredientDTO.getId())) {
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_ALREADY_EXIST);
         }
         //check if ingredient already in recipe
         if(this.recipeIngredientRepository.existsByRecipe_IdAndIngredient_Id(
-            recipeIngredient.getRecipeId(), recipeIngredient.getIngredientId())){
+            recipeIngredientDTO.getRecipe().getId(), recipeIngredientDTO.getIngredient().getId())){
                 throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_ALREADY_EXIST_IN_RECIPE);
         }
-        if(recipeIngredient.getIngredientAmountInGr() <= 0.0) {
+        if(recipeIngredientDTO.getIngredientAmountInGr() <= 0.0) {
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_MISSING_AMOUNT);
         }
-        Ingredient ingredient = recipeIngredient.getIngredient();
+        IngredientDTO ingredient = recipeIngredientDTO.getIngredient();
         if(ingredient.getPriceper1grNIS() <= 0.0) {
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_MISSING_PRICE);
         }
-        return this.recipeIngredientRepository.save(recipeIngredient);
+        RecipeIngredient recipeIngredient = this.modelMapper.map(recipeIngredientDTO, RecipeIngredient.class);
+        recipeIngredient = this.recipeIngredientRepository.save(recipeIngredient);
+
+        return this.modelMapper.map(recipeIngredient, RecipeIngredientDTO.class);
     }
 
     @Override
@@ -47,25 +51,33 @@ public class RecipeIngredientServiceImp implements RecipeIngredientService{
     }
 
     @Override
-    public void updateRecipeIngredient(int id, RecipeIngredient recipeIngredient) throws AppException {
+    public RecipeIngredientDTO getSingleRecipeIngredientDTO(int id) throws AppException {
+        RecipeIngredient recipeIngredient =  this.getSingleRecipeIngredient(id);
+        return this.modelMapper.map(recipeIngredient,RecipeIngredientDTO.class);
+    }
+
+    @Override
+    public void updateRecipeIngredient(int id, RecipeIngredientDTO recipeIngredientDTO) throws AppException {
         RecipeIngredient recipeIngredientDB = this.getSingleRecipeIngredient(id);
         if(!this.recipeIngredientRepository.existsById(id)){
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_NOT_FOUND);
         }
-        if(recipeIngredient.getIngredientAmountInGr() <= 0.0) {
+        if(recipeIngredientDTO.getIngredientAmountInGr() <= 0.0) {
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_MISSING_AMOUNT);
         }
-        Ingredient ingredient = recipeIngredient.getIngredient();
+        IngredientDTO ingredient = recipeIngredientDTO.getIngredient();
         if(ingredient.getPriceper1grNIS() <= 0.0) {
             throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_MISSING_PRICE);
         }
         //if ingredient already in recipe
         if(this.recipeIngredientRepository.existsByRecipe_IdAndIngredient_Id(
-            recipeIngredient.getRecipeId(), recipeIngredient.getIngredientId())){
+            recipeIngredientDTO.getRecipe().getId(), ingredient.getId())){
                 throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_ALREADY_EXIST_IN_RECIPE);
             }
 
-        recipeIngredient.setId(recipeIngredientDB.getId());
+        recipeIngredientDTO.setId(recipeIngredientDB.getId());
+        RecipeIngredient recipeIngredient = this.modelMapper.map(recipeIngredientDTO, RecipeIngredient.class);
+        
         this.recipeIngredientRepository.save(recipeIngredient);
     }
 
@@ -76,14 +88,20 @@ public class RecipeIngredientServiceImp implements RecipeIngredientService{
         }
 
     @Override
-    public List<RecipeIngredient> getAllRecipeIngredients(){
-        return this.recipeIngredientRepository.findAll();    
+    public List<RecipeIngredientDTO> getAllRecipeIngredients(){
+        List<RecipeIngredient> recipesIngredients = this.recipeIngredientRepository.findAll();
+        List<RecipeIngredientDTO> recipesIngredientsDTO = recipesIngredients.stream()
+        .map(recipe -> this.modelMapper.map(recipe, RecipeIngredientDTO.class)).toList();
+        return recipesIngredientsDTO;
     }
 
     @Override
-    public List<RecipeIngredient> getAllRecipeIngredientByRecipeId(int recipeId) {
-        return this.recipeIngredientRepository.findAllIngredientsByRecipe_Id(recipeId);
-            }
+    public List<RecipeIngredientDTO> getAllRecipeIngredientByRecipeId(int recipeId) {
+        List<RecipeIngredient> recipesIngredients = this.recipeIngredientRepository.findAllIngredientsByRecipe_Id(recipeId);
+        List<RecipeIngredientDTO> recipesIngredientsDTO = recipesIngredients.stream()
+        .map(recipe -> this.modelMapper.map(recipe, RecipeIngredientDTO.class)).toList();
+        return recipesIngredientsDTO;        
+    }
 
 	@Override
 	public double getTotalPriceByRecipeId(int recipeId) {

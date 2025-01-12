@@ -5,6 +5,8 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredient;
+import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientDTO;
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientServiceImp;
 import com.example.cookbook.ErrorHandeling.AppException;
 
@@ -77,6 +79,47 @@ public class RecipeServiceImp implements RecipeService{
         Recipe recipe = this.getSingleRecipe(id);
         return this.modelMapper.map(recipe, RecipeDTO.class);
     }
+
+    @Override
+    public RecipeIngredientDTO addRecipeIngredient(RecipeIngredientDTO recipeIngredient) throws AppException {
+        return this.recipeIngredientServiceImp.addRecipeIngredient(recipeIngredient);   
+    }
+
+    @Override
+    public RecipeIngredientDTO getSingleRecipeIngredient(int id) throws AppException {
+        return this.recipeIngredientServiceImp.getSingleRecipeIngredientDTO(id);    
+    }
+
+    @Override
+    public void updateRecipeIngredient(int id, RecipeIngredientDTO recipeIngredient) throws AppException {
+        this.recipeIngredientServiceImp.updateRecipeIngredient(id, recipeIngredient);
+    }
+
+    @Override
+    public void deleteRecipeIngredient(int id) throws AppException {
+        this.recipeIngredientServiceImp.deleteRecipeIngredient(id);
+    }
+
+    @Override
+    public List<RecipeIngredientDTO> getAllRecipeIngredients() {
+        return this.recipeIngredientServiceImp.getAllRecipeIngredients();
+    }
+
+    @Override
+    public List<RecipeIngredientDTO> getAllRecipeIngredientByRecipeId(int recipeId) throws AppException {
+        return this.recipeIngredientServiceImp.getAllRecipeIngredientByRecipeId(recipeId);
+    }
+
+    @Override
+    public List<RecipeDTO> getAllRecipeWithIngredient(int ingredientId) {
+        return this.recipeIngredientServiceImp.getAllRecipeWithIngredient(ingredientId);    
+    }
+
+    @Override
+    public List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException {
+        return this.getAllRecipeWithIngredients(ingredientIds);
+    }
+
 
 
 }

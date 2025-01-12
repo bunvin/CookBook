@@ -23,11 +23,11 @@ public class RecipeIngredient {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "recipe_id", updatable = false)
     private Recipe recipe;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ingredient_id")
+    @JoinColumn(name = "ingredient_id", updatable = false)
     private Ingredient ingredient;
 
     private double ingredientAmountInGr;

@@ -2,8 +2,6 @@ package com.example.cookbook.AppModule.ingredient;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientServiceImp;
 import com.example.cookbook.ErrorHandeling.AppException;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class IngredientController {
     private final IngredientServiceImp ingredientServiceImp;
-    private final RecipeIngredientServiceImp recipeIngredientServiceImp;
 
     @PostMapping
     public IngredientDTO addIngredient(@RequestBody IngredientDTO ingredient) throws AppException {
@@ -64,8 +60,5 @@ public class IngredientController {
     public List<IngredientDTO> getAllIngredientDTO() throws AppException{
         return this.ingredientServiceImp.getAllIngredients();
     }
-
-    
-
 
 }

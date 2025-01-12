@@ -9,12 +9,13 @@ import com.example.cookbook.ErrorHandeling.AppException;
 
 @Service
 public interface RecipeIngredientService {
-    RecipeIngredient addRecipeIngredient(RecipeIngredient recipeIngredient) throws AppException;
+    RecipeIngredientDTO addRecipeIngredient(RecipeIngredientDTO recipeIngredientDTO) throws AppException;
     RecipeIngredient getSingleRecipeIngredient(int id) throws AppException;
-    void updateRecipeIngredient(int id, RecipeIngredient recipeIngredient) throws AppException;
+    RecipeIngredientDTO getSingleRecipeIngredientDTO(int id) throws AppException;
+    void updateRecipeIngredient(int id, RecipeIngredientDTO recipeIngredientDTO) throws AppException;
     void deleteRecipeIngredient(int id) throws AppException;
-    List<RecipeIngredient> getAllRecipeIngredients();
-    List<RecipeIngredient> getAllRecipeIngredientByRecipeId(int recipeId) throws AppException;
+    List<RecipeIngredientDTO> getAllRecipeIngredients();
+    List<RecipeIngredientDTO> getAllRecipeIngredientByRecipeId(int recipeId) throws AppException;
     double getTotalPriceByRecipeId(int recipeId);
     List<RecipeDTO> getAllRecipeWithIngredient(int ingredientId);
     List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException;

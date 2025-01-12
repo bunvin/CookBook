@@ -5,8 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-
-import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientServiceImp;
 import com.example.cookbook.ErrorHandeling.AppException;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IngredientServiceImp implements IngredientService{
     private final IngredientRepository ingredientRepository;
-    private final RecipeIngredientServiceImp recipeIngredientServiceImp; 
     private final ModelMapper modelMapper;
 
     @Override
@@ -76,5 +73,7 @@ public class IngredientServiceImp implements IngredientService{
     this.updateIngredient(ingredientId, updatedIngredient);
     System.out.println(ingredient.getName()+" newly calculated price per 1 gr is: "+ ingredient.getPriceper1grNIS()+"₪");
 }
+
+
 
 }
