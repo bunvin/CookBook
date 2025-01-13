@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.cookbook.AppModule.recipe.Recipe;
+import com.example.cookbook.AppModule.recipe.RecipeDTO;
 
 @Repository
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, Integer>{
@@ -31,5 +32,5 @@ public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredie
     "WHERE ri.ingredient.id IN :ingredientIds " +
     "GROUP BY ri.recipe.id " +
     "HAVING COUNT(ri.recipe.id) = :ingredientCount")
-    List<Recipe> findAllRecipesByIngredientIds(@Param("ingredientIds") List<Integer> ingredientIds, @Param("ingredientCount") int ingredientCount);
+    List<Recipe> findAllRecipesByIngredientIds(@Param("ingredientIds") int[] ingredientIds, @Param("ingredientCount") int ingredientCount);
 }

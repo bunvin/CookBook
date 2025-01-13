@@ -132,19 +132,13 @@ public class ControllerDemo implements CommandLineRunner{
             System.out.println(recipebying.getTitle());
         }
 
-        // int[] ingredientsId = {2,7};
-        // List<RecipeDTO> tomatoGarlicRecipes = restTemplate.exchange(
-        //     recipeURL+"/all-recipe-by-ingredients/"+"2,7", HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeDTO>>() {}).getBody();
-        // System.out.println("### recipies with tomato and garlic ###");
-        // for(RecipeDTO recipebying : tomatoGarlicRecipes){
-        //     System.out.println(recipebying.getTitle());
-        // }
-
-
-
-
-
-
+        List<RecipeDTO> tomatoGarlicRecipes = restTemplate.exchange(
+            recipeURL+"/all-recipe-by-ingredients/"+2+","+7+"?ingredientCount="+2, HttpMethod.GET, null, 
+            new ParameterizedTypeReference<List<RecipeDTO>>() {}).getBody();
+        System.out.println("### recipies with tomato and garlic ###");
+        for(RecipeDTO recipebying : tomatoGarlicRecipes){
+            System.out.println(recipebying.getTitle());
+        }
 
     }
 

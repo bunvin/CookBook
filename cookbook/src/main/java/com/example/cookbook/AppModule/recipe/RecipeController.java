@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredientDTO;
@@ -61,13 +62,13 @@ public class RecipeController {
         return this.recipeIngredientServiceImp.getAllRecipeWithIngredient(ingredientId);
     }
 
-    @GetMapping("/all-recipe-by-ingredients/{ingredientIds}")
-    public List<RecipeDTO> getAllRecipeWithIngredients(
-            @PathVariable int[] ingredientIds) throws AppException {
-        // Call the service method with ingredientId1 and the rest of the ingredientIds
-        return this.recipeIngredientServiceImp.getAllRecipeWithIngredients(ingredientIds);
+@GetMapping("/all-recipe-by-ingredients/{ingredientIds}")
+public List<RecipeDTO> getAllRecipeWithIngredients(
+        @PathVariable int[] ingredientIds,
+        @RequestParam int ingredientCount) throws AppException {
+        return this.recipeIngredientServiceImp.getAllRecipeWithIngredients(ingredientCount, ingredientIds);
     }
-    //in use: /api/recipe-ingredients/all/1,2,3,4
+    //in use: "/all-recipe-by-ingredients/2,7?ingredientCount=2
 
 
     //Recipe ingredient 

@@ -18,5 +18,5 @@ public interface RecipeIngredientService {
     List<RecipeIngredientDTO> getAllRecipeIngredientByRecipeId(int recipeId) throws AppException;
     double getTotalPriceByRecipeId(int recipeId);
     List<RecipeDTO> getAllRecipeWithIngredient(int ingredientId);
-    List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException;
+    List<RecipeDTO> getAllRecipeWithIngredients(int ingredientCount, int... ingredientIds) throws AppException;
 }

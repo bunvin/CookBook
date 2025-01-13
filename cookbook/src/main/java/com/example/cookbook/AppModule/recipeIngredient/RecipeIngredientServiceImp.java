@@ -108,8 +108,10 @@ public class RecipeIngredientServiceImp implements RecipeIngredientService{
     }
 
     @Override
-    public List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException {
-        return this.getAllRecipeWithIngredients(ingredientIds);
+    public List<RecipeDTO> getAllRecipeWithIngredients(int ingredientCount, int... ingredientIds) throws AppException {
+        List<Recipe> recipes = this.recipeIngredientRepository.findAllRecipesByIngredientIds(ingredientIds, ingredientCount);
+        List<RecipeDTO> recipeDTOList = recipes.stream().map(recipe -> this.modelMapper.map(recipe, RecipeDTO.class)).collect(Collectors.toList());
+        return recipeDTOList;
     }
 
     @Override
