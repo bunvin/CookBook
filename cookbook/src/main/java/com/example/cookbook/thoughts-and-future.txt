@@ -15,4 +15,4 @@ working login
 
 admin can edit all
 - adding ingredient
-- update Ingredient prices
+- update Ingredient prices >> update daily from Shufersal website, using Python Selenium

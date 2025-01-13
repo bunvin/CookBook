@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.example.cookbook.AppModule.ingredient.Ingredient;
 import com.example.cookbook.AppModule.ingredient.IngredientDTO;
 import com.example.cookbook.AppModule.recipe.RecipeDTO;
 import com.example.cookbook.ErrorHandeling.AppException;
@@ -110,21 +109,8 @@ public class RecipeIngredientServiceImp implements RecipeIngredientService{
 
     @Override
     public List<RecipeDTO> getAllRecipeWithIngredients(int... ingredientIds) throws AppException {
-    // Combine all ingredient IDs into a single list and validate Ids
-    List<Integer> allIngredientIds = new ArrayList<>();
-        for (int ingredientId : ingredientIds) {
-            if(this.recipeIngredientRepository.existsById(ingredientId)){
-                allIngredientIds.add(ingredientId);
-            }else{
-                throw new AppException(RecipeIngredientError.RECIPE_INGREDIENT_NOT_FOUND);
-            }
-        }
-
-    List<Recipe> recipeList = this.recipeIngredientRepository.findAllRecipesByIngredientIds(allIngredientIds, allIngredientIds.size());
-    List<RecipeDTO> recipeDTOList = recipeList.stream().map(recipe -> this.modelMapper.map(recipe, RecipeDTO.class)).collect(Collectors.toList());
-
-    return recipeDTOList;
-}
+        return this.getAllRecipeWithIngredients(ingredientIds);
+    }
 
     @Override
     public List<RecipeDTO> getAllRecipeWithIngredient(int ingredientId) {

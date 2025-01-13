@@ -3,6 +3,7 @@ package com.example.cookbook.AppModule.recipeIngredient;
 import com.example.cookbook.AppModule.ingredient.Ingredient;
 import com.example.cookbook.AppModule.recipe.Recipe;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +11,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "recipe_ingredient")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecipeIngredient {
 
     @Id
@@ -30,6 +35,7 @@ public class RecipeIngredient {
     @JoinColumn(name = "ingredient_id", updatable = false)
     private Ingredient ingredient;
 
+    @Column(name = "ingredient_amount_in_gr")
     private double ingredientAmountInGr;
     private boolean isOptional;
 

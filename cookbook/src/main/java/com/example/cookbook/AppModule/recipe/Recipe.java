@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.cookbook.AppModule.recipeIngredient.RecipeIngredient;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,13 +39,15 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private MethodType methodType;
     
+    @Column(columnDefinition = "TEXT")
     private String description;
+    
     private String cookingTime;
     private int numofServing;
 
 
-    @OneToMany(mappedBy = "recipe", cascade = {CascadeType.ALL})
-    private List<RecipeIngredient> recipeIngredients; 
+    // @OneToMany(mappedBy = "recipe", cascade = {CascadeType.ALL})
+    // private List<RecipeIngredient> recipeIngredients; 
 
     @Builder.Default
     private LocalDateTime createdDateTime = LocalDateTime.now();

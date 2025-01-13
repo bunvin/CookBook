@@ -51,7 +51,7 @@ public class RecipeController {
         return this.recipeServiceImp.getAllRecipiesDTO();
     }
 
-    @GetMapping("/totalprice/{id}")
+    @GetMapping("/total-price/{id}")
     public double getRecipeTotalPrice(@PathVariable int id) throws AppException{
         return this.recipeIngredientServiceImp.getTotalPriceByRecipeId(id); 
     }
@@ -72,37 +72,39 @@ public class RecipeController {
 
     //Recipe ingredient 
 
-    @PostMapping
+    @PostMapping("/ingredient")
     public RecipeIngredientDTO addRecipeIngredient(@RequestBody RecipeIngredientDTO recipeIngredient) throws AppException{
         return this.recipeIngredientServiceImp.addRecipeIngredient(recipeIngredient);
     }
 
-    @GetMapping("recipe-ingredient/{id}")
+    @GetMapping("/ingredient/{id}")
     public RecipeIngredientDTO getSingleRecipeIngredient(@PathVariable int recipeIngredientId) throws AppException{
         return this.recipeIngredientServiceImp.getSingleRecipeIngredientDTO(recipeIngredientId);
     }
     
     //update RecipeIngredient //change amount, AppError: id, ingredient,recipe 
-    @PutMapping()
+    @PutMapping("/ingredient")
     public void updateRecipeIngredientAmount(@RequestBody int id, @RequestBody RecipeIngredientDTO recipeIngredientDTO) throws AppException {
         this.recipeIngredientServiceImp.updateRecipeIngredient(id, recipeIngredientDTO);
     }
 
-    @DeleteMapping("/recipe-ingredient/{id}")
+    @DeleteMapping("/ingredient/{id}")
     public void deleteRecipeIngredient(@PathVariable int id) throws AppException{
         this.recipeIngredientServiceImp.deleteRecipeIngredient(id);
     }
 
-    @GetMapping("recipe-ingredient/all")
+    @GetMapping("/ingredient/all")
     public List<RecipeIngredientDTO> getAllRecipesIngredients() {
         return this.recipeIngredientServiceImp.getAllRecipeIngredients();
     }
 
     //getAllRecipeIngredientByRecipeId
-    @GetMapping("recipe-ingredient/byRecipeId/{id}")
+    @GetMapping("/ingredient/byRecipeId/{recipeId}")
     public List<RecipeIngredientDTO> getAllRecipeIngredientsById(@PathVariable int recipeId) {
         return this.recipeIngredientServiceImp.getAllRecipeIngredientByRecipeId(recipeId);
     }
+
+    
 
 
 
